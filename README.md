@@ -1,4 +1,4 @@
-# PipelineSandbox — End-to-End Data Analytics Solution for Retail
+# DataAnalyticsSolution — End-to-End Data Analytics Solution for Retail
 
 A portfolio project showcasing a production-grade, end-to-end Data Analytics platform built for a retail company using the modern data stack. This project demonstrates best practices across **Data Engineering**, **Data Analysis**, **Data Science**, **Data Governance**, **FinOps**, and **DataOps** disciplines.
 
@@ -77,7 +77,7 @@ Build and document a robust, cloud-native analytics solution from raw data inges
 ## Repository Structure *(evolving)*
 
 ```
-PipelineSandbox/
+DataAnalyticsSolution/
 ├── landing/          # Raw file samples and ingestion configs
 ├── pipelines/        # PySpark transformation pipelines (Bronze → Silver → Gold)
 ├── dags/             # Airflow DAGs
