@@ -225,7 +225,81 @@ python -m pipelines.run_pipeline --layer all --project-root .
 
 ---
 
-### 3.2 Databricks on Azure
+### 3.2 Databricks Free Tier
+
+Databricks offers a **free Community Edition** — a great way to run this solution without any cloud subscription or cost. It includes a single-node cluster, a managed notebook environment, and DBFS (Databricks File System) for storage.
+
+**Limitations:** no multi-node clusters, no Databricks Asset Bundles, no Unity Catalog. Use this tier for learning and local experimentation only.
+
+#### Step 1 — Sign up
+
+Go to [community.cloud.databricks.com](https://community.cloud.databricks.com) and create a free account.
+
+#### Step 2 — Upload the landing data
+
+In the Databricks UI, navigate to **Data > Add Data > Upload Files** and upload the CSV files from the `landing/` folder into DBFS:
+
+```
+/FileStore/landing/sales/
+/FileStore/landing/customers/
+/FileStore/landing/products/
+/FileStore/landing/stores/
+/FileStore/landing/inventory/
+```
+
+#### Step 3 — Upload the pipeline code
+
+In the Databricks UI, navigate to **Workspace > Import** and upload the contents of the `pipelines/` folder, or clone the repository directly into a Databricks Repo:
+
+```
+Workspace > Repos > Add Repo > https://github.com/Rogeriolbs/DataAnalyticsSolution.git
+```
+
+#### Step 4 — Create a cluster
+
+In the Databricks UI, go to **Compute > Create Cluster**. Select the latest **Databricks Runtime (with Apache Spark)** and choose a **Single Node** cluster type. Install the Delta Lake library from the cluster Libraries tab:
+
+```
+Maven: io.delta:delta-core_2.12:<version>
+```
+
+#### Step 5 — Set environment variables
+
+In a Databricks notebook, set the paths before running the pipeline:
+
+```python
+import os
+os.environ["ENVIRONMENT"]    = "dev"
+os.environ["LANDING_PATH"]   = "/FileStore/landing"
+os.environ["BRONZE_PATH"]    = "/FileStore/bronze"
+os.environ["SILVER_PATH"]    = "/FileStore/silver"
+os.environ["GOLD_PATH"]      = "/FileStore/gold"
+```
+
+#### Step 6 — Run the pipeline
+
+In a notebook, run each layer:
+
+```python
+# Attach this notebook to your cluster, then:
+%run /Repos/DataAnalyticsSolution/pipelines/run_pipeline
+```
+
+Or import and call directly:
+
+```python
+from pipelines.bronze.ingest import run_all
+from pipelines.silver.transform import run as run_silver
+from pipelines.gold.transform import run as run_gold
+
+run_all()
+run_silver()
+run_gold()
+```
+
+---
+
+### 3.3 Databricks on Azure
 
 **Prerequisites:** Databricks workspace on Azure, ADLS Gen2 storage account, Service Principal with Storage Blob Data Contributor role.
 
