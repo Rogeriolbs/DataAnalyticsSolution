@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Customers Schema",
+  "version": "1.0.0",
+  "type": "object",
+  "required": ["customer_id", "first_name", "last_name", "email", "registration_date"],
+  "properties": {
+    "customer_id":      {"type": "string", "pattern": "^CUST-\\d+$"},
+    "first_name":       {"type": "string"},
+    "last_name":        {"type": "string"},
+    "email":            {"type": "string", "format": "email"},
+    "phone":            {"type": ["string", "null"]},
+    "date_of_birth":    {"type": ["string", "null"], "format": "date"},
+    "gender":           {"type": ["string", "null"], "enum": ["M", "F", "O", null]},
+    "loyalty_tier":     {"type": ["string", "null"], "enum": ["Bronze", "Silver", "Gold", "Platinum", null]},
+    "loyalty_points":   {"type": ["integer", "null"], "minimum": 0},
+    "registration_date":{"type": "string", "format": "date"},
+    "address_line1":    {"type": ["string", "null"]},
+    "address_line2":    {"type": ["string", "null"]},
+    "city":             {"type": ["string", "null"]},
+    "state":            {"type": ["string", "null"]},
+    "zip_code":         {"type": ["string", "null"]},
+    "country":          {"type": ["string", "null"]},
+    "marketing_opt_in": {"type": ["boolean", "null"]}
+  },
+  "additionalProperties": false
+}

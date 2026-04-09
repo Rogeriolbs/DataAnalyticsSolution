@@ -1,0 +1,7 @@
+store_id,store_name,store_type,address_line1,city,state,zip_code,country,region,open_date,area_sqm,num_employees,is_active,phone,manager_id
+STR-001,São Paulo Centro,flagship,Av. Paulista 1500,São Paulo,SP,01310-200,Brazil,Southeast,2015-03-01,1200,85,true,+55-11-3000-0001,MGR-001
+STR-002,Rio de Janeiro Barra,standard,Av. das Américas 4666,Rio de Janeiro,RJ,22640-102,Brazil,Southeast,2017-06-15,800,55,true,+55-21-3000-0002,MGR-002
+STR-003,Belo Horizonte Savassi,standard,Rua Pernambuco 1200,Belo Horizonte,MG,30130-151,Brazil,Southeast,2018-09-01,750,48,true,+55-31-3000-0003,MGR-003
+STR-004,Curitiba BairroNovo,standard,Av. Sete de Setembro 3500,Curitiba,PR,80250-205,Brazil,South,2019-02-20,600,40,true,+55-41-3000-0004,MGR-004
+STR-005,Porto Alegre Moinhos,standard,Rua Olavo Barreto 36,Porto Alegre,RS,90570-140,Brazil,South,2020-05-10,580,38,true,+55-51-3000-0005,MGR-005
+STR-006,Brasília Park Shopping,standard,SEPN Trecho 2,Brasília,DF,70712-907,Brazil,Central-West,2021-08-01,620,42,true,+55-61-3000-0006,MGR-006

@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sales Transaction Schema",
+  "version": "1.0.0",
+  "type": "object",
+  "required": ["transaction_id", "order_id", "transaction_date", "product_id", "quantity", "unit_price", "payment_method", "channel"],
+  "properties": {
+    "transaction_id": {"type": "string", "pattern": "^TXN-\\d+$"},
+    "order_id":       {"type": "string", "pattern": "^ORD-\\d+$"},
+    "transaction_date":{"type": "string", "format": "date-time"},
+    "store_id":       {"type": ["string", "null"], "pattern": "^STR-\\d+$"},
+    "customer_id":    {"type": ["string", "null"], "pattern": "^CUST-\\d+$"},
+    "product_id":     {"type": "string", "pattern": "^PRD-\\d+$"},
+    "quantity":       {"type": "integer", "minimum": 1},
+    "unit_price":     {"type": "number", "minimum": 0},
+    "discount_pct":   {"type": "number", "minimum": 0, "maximum": 100},
+    "payment_method": {"type": "string", "enum": ["credit_card", "debit_card", "cash", "pix", "voucher"]},
+    "channel":        {"type": "string", "enum": ["in_store", "online", "mobile"]}
+  },
+  "additionalProperties": false
+}

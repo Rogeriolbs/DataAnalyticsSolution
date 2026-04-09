@@ -1,0 +1,23 @@
+customer_id,first_name,last_name,email,phone,date_of_birth,gender,loyalty_tier,loyalty_points,registration_date,address_line1,address_line2,city,state,zip_code,country,marketing_opt_in
+CUST-0001,Alice,Martins,alice.martins@email.com,+55-11-99001-0001,1985-03-12,F,Gold,12500,2019-06-15,Rua das Flores 123,,São Paulo,SP,01310-100,Brazil,true
+CUST-0025,Bruno,Costa,bruno.costa@email.com,+55-21-98002-0025,1990-07-22,M,Silver,4200,2021-02-10,Av. Atlântica 456,Apt 7,Rio de Janeiro,RJ,22010-000,Brazil,true
+CUST-0050,Carla,Souza,carla.souza@email.com,+55-31-97003-0050,1978-11-05,F,Bronze,980,2022-08-03,Rua Bahia 789,,Belo Horizonte,MG,30160-011,Brazil,false
+CUST-0102,Diego,Fernandes,diego.fernandes@email.com,+55-41-96004-0102,1995-01-30,M,Silver,3750,2020-11-22,Rua XV de Novembro 321,,Curitiba,PR,80020-310,Brazil,true
+CUST-0200,Elena,Lima,elena.lima@email.com,+55-51-95005-0200,1988-09-14,F,Gold,9800,2018-04-07,Av. Ipiranga 654,,Porto Alegre,RS,90160-092,Brazil,true
+CUST-0233,Fabio,Alves,fabio.alves@email.com,+55-61-94006-0233,1993-04-25,M,Bronze,320,2023-01-15,SQN 310 Bloco A,,Brasília,DF,70765-010,Brazil,false
+CUST-0350,Gabriela,Rocha,gabriela.rocha@email.com,+55-71-93007-0350,1982-12-08,F,Platinum,25000,2017-09-30,Av. Sete de Setembro 987,,Salvador,BA,40060-001,Brazil,true
+CUST-0410,Henrique,Barros,henrique.barros@email.com,+55-81-92008-0410,1975-06-17,M,Silver,5100,2020-05-18,Rua do Brum 147,,Recife,PE,50030-310,Brazil,true
+CUST-0450,Isabela,Castro,isabela.castro@email.com,+55-85-91009-0450,1998-02-28,F,Bronze,150,2023-07-22,Rua Monsenhor Tabosa 258,,Fortaleza,CE,60175-090,Brazil,true
+CUST-0512,João,Nascimento,joao.nascimento@email.com,+55-92-90010-0512,1970-08-03,M,Gold,11200,2016-12-01,Av. Eduardo Ribeiro 369,,Manaus,AM,69010-001,Brazil,false
+CUST-0550,Karla,Dias,karla.dias@email.com,+55-62-89011-0550,1992-05-11,F,Silver,2900,2021-09-14,Rua 82 N 741,,Goiânia,GO,74115-080,Brazil,true
+CUST-0613,Lucas,Pereira,lucas.pereira@email.com,+55-48-88012-0613,1987-10-19,M,Bronze,670,2022-03-28,Rua Tenente Silveira 852,,Florianópolis,SC,88010-300,Brazil,true
+CUST-0650,Mariana,Santos,mariana.santos@email.com,+55-16-87013-0650,1994-03-07,F,Silver,3400,2020-07-11,Rua Boa Morte 963,,Ribeirão Preto,SP,14010-040,Brazil,false
+CUST-0714,Nathalia,Gomes,nathalia.gomes@email.com,+55-13-86014-0714,1983-07-29,F,Bronze,540,2022-11-05,Av. Ana Costa 174,,Santos,SP,11060-001,Brazil,true
+CUST-0750,Otávio,Carvalho,otavio.carvalho@email.com,+55-19-85015-0750,1991-11-13,M,Gold,8700,2019-02-20,Rua Conceição 285,,Campinas,SP,13010-050,Brazil,true
+CUST-0815,Patricia,Vieira,patricia.vieira@email.com,+55-27-84016-0815,1976-04-02,F,Platinum,31000,2015-08-16,Av. Nossa Senhora da Penha 396,,Vitória,ES,29085-100,Brazil,true
+CUST-0850,Rafael,Teixeira,rafael.teixeira@email.com,+55-98-83017-0850,1999-09-21,M,Bronze,90,2023-10-30,Rua do Sol 407,,São Luís,MA,65010-450,Brazil,true
+CUST-0916,Sandra,Moreira,sandra.moreira@email.com,+55-82-82018-0916,1980-01-14,F,Silver,4800,2019-12-08,Av. Gustavo Paiva 518,,Maceió,AL,57035-260,Brazil,false
+CUST-0950,Thiago,Ribeiro,thiago.ribeiro@email.com,+55-83-81019-0950,1997-06-30,M,Bronze,210,2023-04-17,Av. Epitácio Pessoa 629,,João Pessoa,PB,58030-000,Brazil,true
+CUST-1017,Ursula,Monteiro,ursula.monteiro@email.com,+55-86-80020-1017,1985-12-25,F,Gold,10500,2018-07-23,Av. Frei Serafim 730,,Teresina,PI,64001-010,Brazil,true
+CUST-1118,Vinicius,Pinto,vinicius.pinto@email.com,+55-95-79021-1118,1993-08-16,M,Silver,3100,2021-05-02,Av. Brigadeiro Eduardo Gomes 841,,Boa Vista,RR,69301-970,Brazil,true
+CUST-1219,Wesley,Azevedo,wesley.azevedo@email.com,+55-96-78022-1219,1989-03-04,M,Bronze,430,2022-09-19,Rua Cândido Mariano 952,,Macapá,AP,68900-070,Brazil,false

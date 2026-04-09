@@ -1,0 +1,24 @@
+product_id,product_name,category,subcategory,brand,sku,unit_cost,unit_price,weight_kg,is_perishable,is_active,launch_date,supplier_id
+PRD-1001,Classic White T-Shirt,Apparel,T-Shirts,BasicWear,SKU-APP-001,12.50,29.99,0.20,false,true,2022-01-15,SUP-01
+PRD-1033,Slim Fit Jeans,Apparel,Jeans,DenimCo,SKU-APP-002,25.00,59.99,0.65,false,true,2021-06-01,SUP-01
+PRD-1045,Running Sneakers,Apparel,Footwear,SpeedRun,SKU-APP-003,35.00,89.99,0.80,false,true,2023-03-10,SUP-02
+PRD-1055,Leather Belt,Apparel,Accessories,LeatherCraft,SKU-APP-004,8.00,19.99,0.15,false,true,2020-09-20,SUP-02
+PRD-1078,Wool Sweater,Apparel,Knitwear,WoolMaster,SKU-APP-005,18.00,44.99,0.45,false,true,2022-10-01,SUP-01
+PRD-2010,Organic Arabica Coffee,Food & Beverage,Coffee,BeanOrigin,SKU-FNB-001,6.00,14.99,0.50,false,true,2021-01-10,SUP-03
+PRD-2011,Green Tea Pack,Food & Beverage,Tea,TeaLeaf,SKU-FNB-002,4.50,11.99,0.10,false,true,2020-05-15,SUP-03
+PRD-2033,Protein Bar Box,Food & Beverage,Snacks,FitFood,SKU-FNB-003,9.00,19.99,0.36,false,true,2022-07-01,SUP-04
+PRD-2044,Olive Oil Extra Virgin,Food & Beverage,Condiments,OliveGold,SKU-FNB-004,18.00,34.99,0.75,false,true,2021-03-22,SUP-04
+PRD-2055,Mineral Water 6-Pack,Food & Beverage,Beverages,PureSpring,SKU-FNB-005,3.00,7.99,3.00,false,true,2019-11-01,SUP-05
+PRD-2078,Dark Chocolate 70%,Food & Beverage,Confectionery,ChocArt,SKU-FNB-006,5.50,12.99,0.10,false,true,2020-08-14,SUP-05
+PRD-3001,Non-Stick Cookware Set,Home & Kitchen,Cookware,KitchenPro,SKU-HNK-001,55.00,129.99,2.50,false,true,2021-04-05,SUP-06
+PRD-3005,Stand Mixer,Home & Kitchen,Appliances,MixMaster,SKU-HNK-002,80.00,199.99,4.80,false,true,2022-02-18,SUP-06
+PRD-3020,Memory Foam Pillow,Home & Kitchen,Bedding,DreamSleep,SKU-HNK-003,20.00,49.99,0.90,false,true,2020-12-10,SUP-07
+PRD-3033,Bamboo Cutting Board,Home & Kitchen,Kitchen Tools,EcoHome,SKU-HNK-004,12.00,27.99,0.60,false,true,2021-09-28,SUP-07
+PRD-3044,Stainless Steel Thermos,Home & Kitchen,Drinkware,ThermoKeep,SKU-HNK-005,15.00,34.99,0.40,false,true,2022-05-12,SUP-07
+PRD-4001,Yoga Mat,Sports & Outdoors,Fitness,ZenFit,SKU-SPO-001,22.00,54.99,1.20,false,true,2021-07-19,SUP-08
+PRD-4002,Resistance Bands Set,Sports & Outdoors,Fitness,FlexPower,SKU-SPO-002,10.00,24.99,0.30,false,true,2022-01-25,SUP-08
+PRD-4033,Hiking Backpack 40L,Sports & Outdoors,Outdoor,TrailBlaze,SKU-SPO-003,65.00,149.99,1.10,false,true,2020-06-30,SUP-09
+PRD-5001,65" 4K Smart TV,Electronics,TVs,VisionMax,SKU-ELE-001,600.00,1299.99,22.00,false,true,2023-01-10,SUP-10
+PRD-5002,Wireless Headphones,Electronics,Audio,SoundWave,SKU-ELE-002,80.00,199.99,0.28,false,true,2022-08-22,SUP-10
+PRD-6001,Mechanical Keyboard,Electronics,Peripherals,TypeMaster,SKU-ELE-003,55.00,129.99,0.90,false,true,2021-11-15,SUP-10
+PRD-6002,Gaming Monitor 27",Electronics,Monitors,PixelView,SKU-ELE-004,180.00,399.99,4.50,false,true,2023-05-01,SUP-10

@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Products Schema",
+  "version": "1.0.0",
+  "type": "object",
+  "required": ["product_id", "product_name", "category", "sku", "unit_cost", "unit_price", "is_active"],
+  "properties": {
+    "product_id":    {"type": "string", "pattern": "^PRD-\\d+$"},
+    "product_name":  {"type": "string"},
+    "category":      {"type": "string"},
+    "subcategory":   {"type": ["string", "null"]},
+    "brand":         {"type": ["string", "null"]},
+    "sku":           {"type": "string"},
+    "unit_cost":     {"type": "number", "minimum": 0},
+    "unit_price":    {"type": "number", "minimum": 0},
+    "weight_kg":     {"type": ["number", "null"], "minimum": 0},
+    "is_perishable": {"type": "boolean"},
+    "is_active":     {"type": "boolean"},
+    "launch_date":   {"type": ["string", "null"], "format": "date"},
+    "supplier_id":   {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}

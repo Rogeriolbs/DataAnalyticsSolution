@@ -1,0 +1,35 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# Environment
+.env
+
+# Pytest / Coverage
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Databricks
+.databricks/
+bundle.deployment.yaml
+
+# Spark / Delta local
+spark-warehouse/
+derby.log
+metastore_db/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/settings.json
+.idea/
+*.iml
