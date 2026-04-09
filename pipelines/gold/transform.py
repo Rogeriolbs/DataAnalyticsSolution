@@ -250,7 +250,7 @@ def run(spark: SparkSession | None = None) -> dict:
 
     # Star Schema fact
     fact = build_gold_fact_sales(spark)
-    _write_gold(fact, "fact_sales", partition_cols=["year"])
+    _write_gold(fact, "fact_sales", partition_cols=["date_id"])
     results["fact_sales"] = fact.count()
 
     # OBT

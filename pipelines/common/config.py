@@ -1,5 +1,15 @@
 """Central configuration loaded from environment variables."""
 import os
+from pathlib import Path
+
+# Load .env from project root if python-dotenv is available
+try:
+    from dotenv import load_dotenv
+    _env_file = Path(__file__).resolve().parents[2] / ".env"
+    if _env_file.exists():
+        load_dotenv(_env_file)
+except ImportError:
+    pass
 
 
 class Config:

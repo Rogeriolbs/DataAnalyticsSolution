@@ -1,6 +1,6 @@
 [build-system]
 requires = ["setuptools>=68", "wheel"]
-build-backend = "setuptools.backends.legacy:build"
+build-backend = "setuptools.build_meta"
 
 [project]
 name = "dataanalyticssolution"
@@ -32,6 +32,9 @@ agents = [
     "anthropic>=0.28.0",
     "streamlit>=1.35.0",
 ]
+
+[tool.setuptools.packages.find]
+include = ["pipelines*", "tests*"]
 
 [tool.ruff]
 line-length = 100
