@@ -1,0 +1,13 @@
+targets:
+  dev:
+    mode: development
+    default: true
+
+    variables:
+      landing_path: /FileStore/DataAnalyticsSolution/landing
+
+    resources:
+      pipelines:
+        analytics_pipeline:
+          development: true      # DLT dev mode: isolated schema, no data retention cost
+          continuous: false      # Triggered runs — start manually or on schedule

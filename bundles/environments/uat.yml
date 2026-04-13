@@ -1,0 +1,12 @@
+targets:
+  uat:
+    mode: staging
+
+    variables:
+      landing_path: /mnt/data/landing   # mount point for cloud storage
+
+    resources:
+      pipelines:
+        analytics_pipeline:
+          development: false
+          continuous: false             # Triggered by CI on merge to uat branch

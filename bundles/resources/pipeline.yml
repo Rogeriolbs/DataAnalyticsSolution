@@ -1,0 +1,29 @@
+resources:
+  pipelines:
+    analytics_pipeline:
+      # ── Identity ─────────────────────────────────────────────────────────────
+      name: "DataAnalyticsSolution — Medallion Pipeline [${bundle.target}]"
+
+      # ── Unity Catalog three-part namespace ───────────────────────────────────
+      # Tables are published as:
+      #   ${var.catalog}.bronze.<streaming_table>
+      #   ${var.catalog}.silver.<materialized_view>
+      #   ${var.catalog}.gold.<materialized_view>
+      catalog: ${var.catalog}
+
+      # ── Source notebook ──────────────────────────────────────────────────────
+      libraries:
+        - notebook:
+            path: ./notebooks/lakeflow_pipeline
+
+      # ── Pipeline parameters (passed to spark.conf inside the notebook) ───────
+      configuration:
+        pipeline.landing_path: ${var.landing_path}
+        pipeline.catalog: ${var.catalog}
+
+      # ── Runtime defaults (overridden per target) ─────────────────────────────
+      channel: CURRENT
+      edition: ADVANCED
+      photon: false
+      continuous: false
+      development: false

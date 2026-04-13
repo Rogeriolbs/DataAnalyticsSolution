@@ -1,0 +1,20 @@
+bundle:
+  name: dataanalyticssolution
+  databricks_cli_version: ">= 0.220.0"
+
+# Sub-files included at parse time
+include:
+  - bundles/resources/*.yml
+  - bundles/environments/*.yml
+
+# ── Shared variables ──────────────────────────────────────────────────────────
+variables:
+  catalog:
+    default: DataAnalyticsSolution
+    description: Unity Catalog name that owns all three medallion schemas.
+
+  landing_path:
+    default: /FileStore/DataAnalyticsSolution/landing
+    description: >
+      Path to the Landing Zone (DBFS, ADLS, S3, or GCS).
+      Override per target in bundles/environments/*.yml.

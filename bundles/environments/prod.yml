@@ -1,0 +1,13 @@
+targets:
+  prod:
+    mode: production
+
+    variables:
+      landing_path: /mnt/data/landing   # mount point for cloud storage
+
+    resources:
+      pipelines:
+        analytics_pipeline:
+          development: false
+          continuous: true              # Always-on: pipeline restarts automatically after each run
+          photon: true                  # Enable Photon engine for production throughput

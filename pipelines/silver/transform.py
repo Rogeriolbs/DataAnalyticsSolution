@@ -12,7 +12,7 @@ from __future__ import annotations
 from pyspark.sql import DataFrame, SparkSession
 from pyspark.sql import functions as F
 from pyspark.sql import types as T
-from delta import DeltaTable
+from delta.tables import DeltaTable
 
 from pipelines.common.config import Config
 from pipelines.common.logger import get_logger, new_run_id, utc_now
