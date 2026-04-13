@@ -4,7 +4,8 @@ targets:
     default: true
 
     variables:
-      landing_path: /FileStore/DataAnalyticsSolution/landing
+      landing_path: /Volumes/dataanalyticssolution/landing/
+      # /FileStore/DataAnalyticsSolution/landing
 
     resources:
       pipelines:

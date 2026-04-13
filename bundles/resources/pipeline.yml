@@ -14,7 +14,7 @@ resources:
       # ── Source notebook ──────────────────────────────────────────────────────
       libraries:
         - notebook:
-            path: ./notebooks/lakeflow_pipeline
+            path: ../../notebooks/lakeflow_pipeline.py
 
       # ── Pipeline parameters (passed to spark.conf inside the notebook) ───────
       configuration:
