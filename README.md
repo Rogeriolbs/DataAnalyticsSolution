@@ -235,67 +235,35 @@ Databricks offers a **free Community Edition** — a great way to run this solut
 
 Go to [community.cloud.databricks.com](https://community.cloud.databricks.com) and create a free account.
 
-#### Step 2 — Upload the landing data
+#### Step 2 — Connect via Databricks Repos
 
-In the Databricks UI, navigate to **Data > Add Data > Upload Files** and upload the CSV files from the `landing/` folder into DBFS:
-
-```
-/FileStore/landing/sales/
-/FileStore/landing/customers/
-/FileStore/landing/products/
-/FileStore/landing/stores/
-/FileStore/landing/inventory/
-```
-
-#### Step 3 — Upload the pipeline code
-
-In the Databricks UI, navigate to **Workspace > Import** and upload the contents of the `pipelines/` folder, or clone the repository directly into a Databricks Repo:
+In the Databricks UI:
 
 ```
 Workspace > Repos > Add Repo > https://github.com/Rogeriolbs/DataAnalyticsSolution.git
 ```
 
-#### Step 4 — Create a cluster
+This clones the full project (code + landing data) into your workspace.
 
-In the Databricks UI, go to **Compute > Create Cluster**. Select the latest **Databricks Runtime (with Apache Spark)** and choose a **Single Node** cluster type. Install the Delta Lake library from the cluster Libraries tab:
+#### Step 3 — Create a cluster
+
+Go to **Compute > Create Cluster**. Select **Databricks Runtime 13.x LTS** (or newer) and choose **Single Node**. No extra libraries are needed — Delta Lake is pre-installed in the runtime.
+
+#### Step 4 — Open and run the deployment notebook
+
+Navigate to:
 
 ```
-Maven: io.delta:delta-core_2.12:<version>
+Workspace > Repos > <your-username> > DataAnalyticsSolution > notebooks > deploy_free_tier
 ```
 
-#### Step 5 — Set environment variables
+Attach the notebook to your cluster and **Run All**. The notebook will:
 
-In a Databricks notebook, set the paths before running the pipeline:
-
-```python
-import os
-os.environ["ENVIRONMENT"]    = "dev"
-os.environ["LANDING_PATH"]   = "/FileStore/landing"
-os.environ["BRONZE_PATH"]    = "/FileStore/bronze"
-os.environ["SILVER_PATH"]    = "/FileStore/silver"
-os.environ["GOLD_PATH"]      = "/FileStore/gold"
-```
-
-#### Step 6 — Run the pipeline
-
-In a notebook, run each layer:
-
-```python
-# Attach this notebook to your cluster, then:
-%run /Repos/DataAnalyticsSolution/pipelines/run_pipeline
-```
-
-Or import and call directly:
-
-```python
-from pipelines.bronze.ingest import run_all
-from pipelines.silver.transform import run as run_silver
-from pipelines.gold.transform import run as run_gold
-
-run_all()
-run_silver()
-run_gold()
-```
+1. Auto-detect your username and resolve the repo root path
+2. Copy the landing CSV files from the Repo to DBFS (`/FileStore/DataAnalyticsSolution/landing/`)
+3. Set all required environment variables
+4. Run Bronze → Silver → Gold in sequence
+5. Print row counts per Gold table as a sanity check
 
 ---
 
@@ -497,3 +465,31 @@ python -m pipelines.gold.transform
 ## Status
 
 > Project under active development. Layers and components are built iteratively. See the [GitHub Project board](https://github.com/users/Rogeriolbs/projects/1) for current progress.
+
+---
+
+## Built with Claude Code
+
+This project is being built as a **human-AI collaboration experiment** using [Claude Code](https://claude.ai/code) — Anthropic's AI coding agent — to measure how quickly a robust, production-grade data solution can be constructed when a human provides clear requirements and architectural direction and AI handles the implementation.
+
+### The experiment
+
+The core question: **how much does development speed increase when an experienced engineer focuses exclusively on decisions, requirements, and review — and delegates all coding to AI?**
+
+The hypothesis is that this division of labour compresses implementation time dramatically, while keeping quality high because the human remains responsible for what gets built and why.
+
+### How it works in practice
+
+| Human responsibility | AI responsibility |
+|---|---|
+| Define the architecture and data model | Write all pipeline, test, and configuration code |
+| Set requirements and acceptance criteria | Implement quality checks and schema contracts |
+| Make technology and trade-off decisions | Refactor, debug, and fix issues |
+| Review outputs and steer direction | Draft documentation and the PRD |
+| Provide domain knowledge (retail analytics) | Handle boilerplate and repetitive structure |
+
+### Why this matters
+
+Most organizations debate AI coding tools in the abstract. This project produces a concrete, measurable answer: a fully documented, multi-layer data platform built in a fraction of the time it would take a single engineer coding manually — with a real codebase, real tests, and real architectural decisions logged throughout.
+
+If you are evaluating this repository as a portfolio piece, the engineering judgement on display is the human's. The speed at which that judgement was translated into working code is the AI's contribution.
