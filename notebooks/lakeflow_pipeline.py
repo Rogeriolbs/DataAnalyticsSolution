@@ -27,7 +27,7 @@ from pyspark.sql import functions as F
 from pyspark.sql import types as T
 
 # ─── Pipeline parameters ──────────────────────────────────────────────────────
-LANDING = spark.conf.get("pipeline.landing_path", "/FileStore/DataAnalyticsSolution/landing")
+LANDING = spark.conf.get("pipeline.landing_path", "/Volumes/DataAnalyticsSolution/landing")
 _HIGH_DATE = "9999-12-31"
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -44,7 +44,7 @@ def _bronze_csv_stream(entity: str):
     return (
         spark.readStream.format("cloudFiles")
         .option("cloudFiles.format", "csv")
-        .option("cloudFiles.schemaLocation", f"{LANDING}/_schemas/{entity}")
+        .option("cloudFiles.schemaLocation", f"{LANDING}/schemas/{entity}")
         .option("header", "true")
         .option("inferSchema", "true")
         .load(f"{LANDING}/{entity}")
@@ -117,6 +117,7 @@ def inventory():
 # ══════════════════════════════════════════════════════════════════════════════
 
 # COMMAND ----------
+
 # ── dim_date — generated calendar dimension ───────────────────────────────────
 
 @dlt.table(
@@ -147,6 +148,7 @@ def dim_date():
 
 
 # COMMAND ----------
+
 # ── dim_store — full-refresh materialized view ────────────────────────────────
 
 @dlt.table(
@@ -168,6 +170,7 @@ def dim_store():
 
 
 # COMMAND ----------
+
 # ── dim_customer — SCD Type 2 streaming table ─────────────────────────────────
 # apply_changes() tracks history whenever loyalty_tier, loyalty_points, email,
 # city, or state changes. Each change creates a new versioned row with
@@ -194,6 +197,7 @@ dlt.apply_changes(
 
 
 # COMMAND ----------
+
 # ── dim_product — SCD Type 2 streaming table ──────────────────────────────────
 # Tracks history when unit_price, unit_cost, is_active, category, or
 # subcategory changes.
@@ -219,6 +223,7 @@ dlt.apply_changes(
 
 
 # COMMAND ----------
+
 # ── dim_inventory — materialized view ─────────────────────────────────────────
 
 @dlt.table(
@@ -248,6 +253,7 @@ def dim_inventory():
 
 
 # COMMAND ----------
+
 # ── fact_sales — materialized view ────────────────────────────────────────────
 
 @dlt.table(
@@ -290,6 +296,7 @@ def fact_sales():
 # ══════════════════════════════════════════════════════════════════════════════
 
 # COMMAND ----------
+
 # ── Gold dimensions (current rows only from SCD2 tables) ──────────────────────
 
 @dlt.table(
@@ -355,6 +362,7 @@ def dim_date():
 
 
 # COMMAND ----------
+
 # ── Gold fact_sales — slim fact with only keys and additive measures ───────────
 
 @dlt.table(
@@ -380,6 +388,7 @@ def fact_sales():
 
 
 # COMMAND ----------
+
 # ── obt_sales — pre-joined wide table for self-service analytics ───────────────
 
 @dlt.table(
@@ -449,6 +458,7 @@ def obt_sales():
 
 
 # COMMAND ----------
+
 # ── agg_daily_sales — KPI aggregation by day / store / category / channel ─────
 
 @dlt.table(
@@ -480,6 +490,7 @@ def agg_daily_sales():
 
 
 # COMMAND ----------
+
 # ── agg_monthly_sales — KPI aggregation rolled up to month ────────────────────
 
 @dlt.table(
