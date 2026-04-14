@@ -2,7 +2,7 @@
 
 > **Type:** Portfolio project  
 > **Domain:** Retail analytics  
-> **Author:** Rogerio  
+> **Author:** Rogerio Brum 
 > **Status:** Active development  
 > **Last updated:** 2026-04-13
 

@@ -22,7 +22,7 @@
 
 # COMMAND ----------
 
-import dlt
+import dlt as dp
 from pyspark.sql import functions as F
 from pyspark.sql import types as T
 
@@ -55,58 +55,58 @@ def _bronze_csv_stream(entity: str):
     )
 
 
-@dlt.streaming_table(
+@dp.streaming_table(
     schema="bronze",
     comment="Raw sales transactions ingested from the Landing Zone via Auto Loader.",
     table_properties={"quality": "bronze", "delta.enableChangeDataFeed": "true"},
     partition_cols=["ingestion_date"],
 )
-@dlt.expect("non_null_transaction_id", "transaction_id IS NOT NULL")
-@dlt.expect("positive_quantity", "quantity > 0")
+@dp.expect("non_null_transaction_id", "transaction_id IS NOT NULL")
+@dp.expect("positive_quantity", "quantity > 0")
 def sales():
     return _bronze_csv_stream("sales")
 
 
-@dlt.streaming_table(
+@dp.streaming_table(
     schema="bronze",
     comment="Customer master data ingested from the Landing Zone via Auto Loader.",
     table_properties={"quality": "bronze", "delta.enableChangeDataFeed": "true"},
     partition_cols=["ingestion_date"],
 )
-@dlt.expect("non_null_customer_id", "customer_id IS NOT NULL")
+@dp.expect("non_null_customer_id", "customer_id IS NOT NULL")
 def customers():
     return _bronze_csv_stream("customers")
 
 
-@dlt.streaming_table(
+@dp.streaming_table(
     schema="bronze",
     comment="Product catalog ingested from the Landing Zone via Auto Loader.",
     table_properties={"quality": "bronze", "delta.enableChangeDataFeed": "true"},
     partition_cols=["ingestion_date"],
 )
-@dlt.expect("non_null_product_id", "product_id IS NOT NULL")
+@dp.expect("non_null_product_id", "product_id IS NOT NULL")
 def products():
     return _bronze_csv_stream("products")
 
 
-@dlt.streaming_table(
+@dp.streaming_table(
     schema="bronze",
     comment="Store master data ingested from the Landing Zone via Auto Loader.",
     table_properties={"quality": "bronze", "delta.enableChangeDataFeed": "true"},
     partition_cols=["ingestion_date"],
 )
-@dlt.expect("non_null_store_id", "store_id IS NOT NULL")
+@dp.expect("non_null_store_id", "store_id IS NOT NULL")
 def stores():
     return _bronze_csv_stream("stores")
 
 
-@dlt.streaming_table(
+@dp.streaming_table(
     schema="bronze",
     comment="Inventory snapshots ingested from the Landing Zone via Auto Loader.",
     table_properties={"quality": "bronze", "delta.enableChangeDataFeed": "true"},
     partition_cols=["ingestion_date"],
 )
-@dlt.expect("non_null_inventory_id", "inventory_id IS NOT NULL")
+@dp.expect("non_null_inventory_id", "inventory_id IS NOT NULL")
 def inventory():
     return _bronze_csv_stream("inventory")
 
@@ -120,7 +120,7 @@ def inventory():
 
 # ── dim_date — generated calendar dimension ───────────────────────────────────
 
-@dlt.table(
+@dp.table(
     schema="silver",
     comment="Calendar dimension covering 2020-01-01 to 2030-12-31.",
     table_properties={"quality": "silver"},
@@ -151,15 +151,15 @@ def dim_date():
 
 # ── dim_store — full-refresh materialized view ────────────────────────────────
 
-@dlt.table(
+@dp.table(
     schema="silver",
     comment="Store master dimension. Full refresh — no SCD needed for store attributes.",
     table_properties={"quality": "silver"},
 )
-@dlt.expect_or_drop("valid_store_id", "store_id IS NOT NULL")
+@dp.expect_or_drop("valid_store_id", "store_id IS NOT NULL")
 def dim_store():
     return (
-        dlt.read("bronze.stores")
+        dp.read("bronze.stores")
         .select(
             "store_id", "store_name", "store_type", "city", "state",
             "region", "country", "open_date", "area_sqm", "num_employees", "is_active",
@@ -176,7 +176,7 @@ def dim_store():
 # city, or state changes. Each change creates a new versioned row with
 # scd_effective_from / scd_effective_to / scd_is_current managed by DLT.
 
-dlt.create_streaming_table(
+dp.create_streaming_table(
     name="dim_customer",
     schema="silver",
     comment="Customer dimension with full SCD Type 2 history tracking.",
@@ -184,7 +184,7 @@ dlt.create_streaming_table(
     expect_all_or_drop={"valid_customer_id": "customer_id IS NOT NULL"},
 )
 
-dlt.apply_changes(
+dp.apply_changes(
     target="dim_customer",
     source="bronze.customers",
     keys=["customer_id"],
@@ -202,7 +202,7 @@ dlt.apply_changes(
 # Tracks history when unit_price, unit_cost, is_active, category, or
 # subcategory changes.
 
-dlt.create_streaming_table(
+dp.create_streaming_table(
     name="dim_product",
     schema="silver",
     comment="Product catalog dimension with full SCD Type 2 history tracking.",
@@ -210,7 +210,7 @@ dlt.create_streaming_table(
     expect_all_or_drop={"valid_product_id": "product_id IS NOT NULL"},
 )
 
-dlt.apply_changes(
+dp.apply_changes(
     target="dim_product",
     source="bronze.products",
     keys=["product_id"],
@@ -226,16 +226,16 @@ dlt.apply_changes(
 
 # ── dim_inventory — materialized view ─────────────────────────────────────────
 
-@dlt.table(
+@dp.table(
     schema="silver",
     comment="Inventory snapshot dimension with derived stock status.",
     table_properties={"quality": "silver"},
     partition_cols=["store_id"],
 )
-@dlt.expect_or_drop("valid_inventory_id", "inventory_id IS NOT NULL")
+@dp.expect_or_drop("valid_inventory_id", "inventory_id IS NOT NULL")
 def dim_inventory():
     return (
-        dlt.read("bronze.inventory")
+        dp.read("bronze.inventory")
         .select(
             "inventory_id", "store_id", "product_id",
             "quantity_on_hand", "quantity_reserved", "quantity_on_order",
@@ -256,17 +256,17 @@ def dim_inventory():
 
 # ── fact_sales — materialized view ────────────────────────────────────────────
 
-@dlt.table(
+@dp.table(
     schema="silver",
     comment="Cleansed sales fact table with derived gross, discount, and net measures.",
     table_properties={"quality": "silver"},
     partition_cols=["date_id"],
 )
-@dlt.expect_or_fail("non_null_transaction_id", "transaction_id IS NOT NULL")
-@dlt.expect_or_drop("non_negative_net_amount", "net_amount >= 0")
+@dp.expect_or_fail("non_null_transaction_id", "transaction_id IS NOT NULL")
+@dp.expect_or_drop("non_negative_net_amount", "net_amount >= 0")
 def fact_sales():
     return (
-        dlt.read("bronze.sales")
+        dp.read("bronze.sales")
         .select(
             "transaction_id", "order_id", "transaction_date",
             "store_id", "customer_id", "product_id",
@@ -299,14 +299,14 @@ def fact_sales():
 
 # ── Gold dimensions (current rows only from SCD2 tables) ──────────────────────
 
-@dlt.table(
+@dp.table(
     schema="gold",
     comment="Current customer records for BI and self-service analytics.",
     table_properties={"quality": "gold"},
 )
 def dim_customer():
     return (
-        dlt.read("silver.dim_customer")
+        dp.read("silver.dim_customer")
         .filter(F.col("__END_AT").isNull())           # DLT SCD2: NULL end = current row
         .select(
             "customer_id", "first_name", "last_name", "email",
@@ -318,14 +318,14 @@ def dim_customer():
     )
 
 
-@dlt.table(
+@dp.table(
     schema="gold",
     comment="Current product records for BI and self-service analytics.",
     table_properties={"quality": "gold"},
 )
 def dim_product():
     return (
-        dlt.read("silver.dim_product")
+        dp.read("silver.dim_product")
         .filter(F.col("__END_AT").isNull())           # DLT SCD2: NULL end = current row
         .select(
             "product_id", "product_name", "category", "subcategory",
@@ -339,43 +339,43 @@ def dim_product():
     )
 
 
-@dlt.table(
+@dp.table(
     schema="gold",
     comment="Store dimension for BI (pass-through from Silver).",
     table_properties={"quality": "gold"},
 )
 def dim_store():
     return (
-        dlt.read("silver.dim_store")
+        dp.read("silver.dim_store")
         .select("store_id", "store_name", "store_type", "city", "state", "region", "country")
         .withColumn("_gold_loaded_at", F.current_timestamp())
     )
 
 
-@dlt.table(
+@dp.table(
     schema="gold",
     comment="Calendar dimension for BI (pass-through from Silver).",
     table_properties={"quality": "gold"},
 )
 def dim_date():
-    return dlt.read("silver.dim_date").withColumn("_gold_loaded_at", F.current_timestamp())
+    return dp.read("silver.dim_date").withColumn("_gold_loaded_at", F.current_timestamp())
 
 
 # COMMAND ----------
 
 # ── Gold fact_sales — slim fact with only keys and additive measures ───────────
 
-@dlt.table(
+@dp.table(
     schema="gold",
     comment="Sales fact table optimised for Star Schema queries.",
     table_properties={"quality": "gold"},
     partition_cols=["date_id"],
 )
-@dlt.expect_or_fail("non_null_transaction_id", "transaction_id IS NOT NULL")
-@dlt.expect_or_fail("non_negative_net_amount", "net_amount >= 0")
+@dp.expect_or_fail("non_null_transaction_id", "transaction_id IS NOT NULL")
+@dp.expect_or_fail("non_negative_net_amount", "net_amount >= 0")
 def fact_sales():
     return (
-        dlt.read("silver.fact_sales")
+        dp.read("silver.fact_sales")
         .select(
             "transaction_id", "order_id", "date_id",
             "store_id", "customer_id", "product_id",
@@ -391,18 +391,18 @@ def fact_sales():
 
 # ── obt_sales — pre-joined wide table for self-service analytics ───────────────
 
-@dlt.table(
+@dp.table(
     schema="gold",
     comment="One Big Table: fact_sales pre-joined with all dimensions. Optimised for Text-to-SQL and self-service analytics.",
     table_properties={"quality": "gold"},
     partition_cols=["year", "month"],
 )
 def obt_sales():
-    fact        = dlt.read("silver.fact_sales")
-    dim_dt      = dlt.read("silver.dim_date")
-    dim_str     = dlt.read("silver.dim_store")
-    dim_cust    = dlt.read("silver.dim_customer").filter(F.col("__END_AT").isNull())
-    dim_prod    = dlt.read("silver.dim_product").filter(F.col("__END_AT").isNull())
+    fact        = dp.read("silver.fact_sales")
+    dim_dt      = dp.read("silver.dim_date")
+    dim_str     = dp.read("silver.dim_store")
+    dim_cust    = dp.read("silver.dim_customer").filter(F.col("__END_AT").isNull())
+    dim_prod    = dp.read("silver.dim_product").filter(F.col("__END_AT").isNull())
 
     return (
         fact
@@ -461,7 +461,7 @@ def obt_sales():
 
 # ── agg_daily_sales — KPI aggregation by day / store / category / channel ─────
 
-@dlt.table(
+@dp.table(
     schema="gold",
     comment="Daily sales KPIs aggregated by store, product category, and channel.",
     table_properties={"quality": "gold"},
@@ -469,7 +469,7 @@ def obt_sales():
 )
 def agg_daily_sales():
     return (
-        dlt.read("gold.obt_sales")
+        dp.read("gold.obt_sales")
         .groupBy(
             "year", "month", "year_month", "transaction_date",
             "store_id", "store_name", "store_region",
@@ -493,7 +493,7 @@ def agg_daily_sales():
 
 # ── agg_monthly_sales — KPI aggregation rolled up to month ────────────────────
 
-@dlt.table(
+@dp.table(
     schema="gold",
     comment="Monthly sales KPIs rolled up from the daily aggregation.",
     table_properties={"quality": "gold"},
@@ -501,7 +501,7 @@ def agg_daily_sales():
 )
 def agg_monthly_sales():
     return (
-        dlt.read("gold.agg_daily_sales")
+        dp.read("gold.agg_daily_sales")
         .groupBy(
             "year", "month", "year_month",
             "store_id", "store_name", "store_region",

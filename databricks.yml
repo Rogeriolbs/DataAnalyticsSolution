@@ -14,7 +14,7 @@ variables:
     description: Unity Catalog name that owns all three medallion schemas.
 
   landing_path:
-    default: /FileStore/DataAnalyticsSolution/landing
+    default: /Volumes/DataAnalyticsSolution/landing
     description: >
       Path to the Landing Zone (DBFS, ADLS, S3, or GCS).
       Override per target in bundles/environments/*.yml.
