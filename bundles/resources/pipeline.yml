@@ -10,6 +10,7 @@ resources:
       #   ${var.catalog}.silver.<materialized_view>
       #   ${var.catalog}.gold.<materialized_view>
       catalog: ${var.catalog}
+      target: bronze   # default schema; per-table schema= overrides route silver/gold tables correctly
 
       # ── Source notebook ──────────────────────────────────────────────────────
       libraries:
@@ -22,6 +23,7 @@ resources:
         pipeline.catalog: ${var.catalog}
 
       # ── Runtime defaults (overridden per target) ─────────────────────────────
+      serverless: true
       channel: CURRENT
       edition: ADVANCED
       photon: false
